@@ -27,7 +27,8 @@ Un plan no garantiza eso. Lo que sí lo hace probable son siete decisiones, y la
 | **Contraseña temporal creada por Victoria, no invitación por email** | El envío de emails del plan gratuito de Supabase tiene un límite de muy pocos por hora: invitar a un grupo entero fallaría. La docente copia un mensaje de bienvenida y lo manda por WhatsApp |
 | **Registro público de Supabase desactivado** | Solo se entra con una cuenta que crea la docente. Es la lección de seguridad de la tienda de Alan |
 | **Clave `service_role` solo en el servidor** | Se usa únicamente en server actions de `/admin` (crear alumnos, resetear contraseñas). Nunca llega al navegador |
-| **YouTube no listado + embed `youtube-nocookie.com`** | Cero costo y reproductor confiable en celular. Se acepta que el link no es estrictamente privado (grupo chico) |
+| **Grabación: link de Fathom o de YouTube** | Las clases se graban con Fathom. Si el link es de YouTube se reproduce dentro de la página (`youtube-nocookie.com`); con cualquier otro servicio se abre con un botón. Cero costo y funciona se pueda o no descargar el MP4. El link no es estrictamente privado (grupo chico) |
+| **`cacheComponents` desactivado en Next 16** | El scaffold lo activa por defecto, pero casi todas las pantallas dependen de la sesión; el modelo clásico es más simple y menos propenso a errores |
 | **Archivos en buckets privados con URL firmada de corta duración** | Los PDF y exámenes no son públicos |
 | **Fechas con zona horaria explícita `America/Argentina/Buenos_Aires`** | Vercel corre en UTC: sin esto, "próximo encuentro" cambiaría de día a las 21:00 |
 | **PDF de clase: botón "Abrir / descargar", no un visor incrustado** | Los visores PDF dentro de la página se comportan mal en iPhone |

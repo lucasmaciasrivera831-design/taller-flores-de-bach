@@ -1,33 +1,33 @@
 # Checklist — Plataforma Flor de Luz
 
 > Detalle de cada tarea (criterios, verificación, dependencias) en `tasks/plan.md`. Marcar acá a medida que se cierra.
-> Hoy: dom 11/10/2026. Primer encuentro: sáb 24/10.
+> Actualizado: lun 12/10/2026. Primer encuentro: sáb 24/10. **Vista previa lista** (landing, inscripción, aula y panel con datos de ejemplo), subida a GitHub. [x] hecho · [~] hecho a medias · [ ] pendiente.
 
 ## Fase 0 — Preparación (en paralelo, sin código) · dom 11/10 a mié 14/10
-- [ ] **P1** Prueba de grabación de Meet con Victoria + subida a YouTube no listado ⚠️ *la más crítica*
-- [ ] **P2** Reunir contenidos: WhatsApp, link de Meet, logo transparente, textos y programa, PDF cuestionario, gráfico 7 grupos, términos, firma del diploma, confirmar regla de la seña
-- [ ] **P3** Cuentas: repo GitHub vacío (Lucas), proyecto Supabase (registro público desactivado), proyecto Vercel, decidir hosting
+- [ ] **P1** Prueba de grabación con **Fathom** (decidido 12/10): qué link da, si se abre sin cuenta, si deja descargar el MP4 ⚠️ *la más crítica*
+- [ ] **P2** Reunir contenidos. Recibido: logo y flyer, alias, firma (Victoria Salami). **Falta:** WhatsApp, link de Meet, texto y programa reales, PDF cuestionario, gráfico 7 grupos, foto de la flor sin texto, confirmar regla de la seña
+- [~] **P3** Cuentas: repo GitHub ✅ (`taller-flores-de-bach`), hosting = Vercel ✅. **Falta:** proyecto Supabase (registro público desactivado), `vercel login` y dar acceso de la app de GitHub de Vercel al repo
 
 ## Fase 1 — Cimientos
-- [ ] **T1** Proyecto base + sistema de diseño Flor de Luz (mobile-first)
-- [ ] **T2** Cálculo de seña y cuotas, con tests primero
+- [x] **T1** Proyecto base + sistema de diseño Flor de Luz (mobile-first). Playwright se instala más adelante
+- [x] **T2** Cálculo de seña y cuotas (29 tests en verde)
 - [ ] **T3** Base de datos + RLS + buckets + pruebas de RLS
 - [ ] **T4** Auth y roles (`proxy.ts`, login, admin)
 - [ ] ✅ **Checkpoint A**
 
 ## Fase 2 — Inscripción · **M1: vie 16/10**
-- [ ] **T5** Landing pública
-- [ ] **T6** Formulario de inscripción (guardar)
-- [ ] **T7** Confirmación y datos de pago (alias `comadre.tierra.mp`)
-- [ ] **T8** Admin: inscripciones
+- [~] **T5** Landing pública: hecha con textos de ejemplo; falta Lighthouse y los textos reales
+- [~] **T6** Formulario de inscripción: pantalla, validación y calendario de cuotas hechos; **falta guardar en Supabase**, duplicados y límite por IP
+- [~] **T7** Confirmación y datos de pago: hecha; falta cargar el WhatsApp de Victoria
+- [~] **T8** Admin: inscripciones: maqueta con datos de ejemplo; falta conectarla a la base
 - [ ] ✅ **Checkpoint M1** (probado en iPhone y Android; Victoria aprueba textos)
 
 ## Fase 3 — Aula · **M2: jue 22/10**
 - [ ] **T9** Habilitar alumnos (contraseña temporal)
-- [ ] **T10** Aula: inicio (próximo encuentro + Meet)
-- [ ] **T11** Página de clase (YouTube + PDF)
-- [ ] **T12** Admin: gestión de clases
-- [ ] **T13** Biblioteca
+- [~] **T10** Aula: inicio (próximo encuentro + Meet): maqueta funcionando con datos de ejemplo
+- [~] **T11** Página de clase: maqueta lista; el reproductor ya distingue YouTube de otros links (Fathom)
+- [~] **T12** Admin: gestión de clases: maqueta sin funciones
+- [~] **T13** Biblioteca: maqueta con las 4 secciones (incluye el espacio para el gráfico)
 - [ ] ✅ **Checkpoint M2** (ensayo general con Victoria)
 
 ## Sáb 24/10 — Primer encuentro 🎓
