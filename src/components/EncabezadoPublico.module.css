@@ -1,0 +1,44 @@
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgb(251 241 228 / 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linea);
+}
+.barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 64px;
+}
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--dorado-texto);
+}
+.nombre {
+  font-family: var(--fuente-titulo), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ingresar {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.ingresar:hover {
+  text-decoration: underline;
+}

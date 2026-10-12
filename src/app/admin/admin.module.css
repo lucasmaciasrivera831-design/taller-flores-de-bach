@@ -1,0 +1,158 @@
+.marco {
+  min-height: 100dvh;
+  background: var(--crema);
+}
+.encabezado {
+  background: var(--ciruela-profundo);
+  color: var(--crema);
+}
+.barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-height: 60px;
+}
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--fuente-titulo), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.nav {
+  display: flex;
+  gap: 0.25rem;
+}
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.9rem;
+  border-radius: 999px;
+  color: var(--crema);
+  font-weight: 700;
+  text-decoration: none;
+}
+.nav a:hover {
+  background: rgb(251 241 228 / 0.15);
+}
+.principal {
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
+  padding-block: 1.5rem 3rem;
+}
+.titulo {
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  color: var(--ciruela-profundo);
+}
+.subtitulo {
+  color: var(--tinta-suave);
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+.dato {
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-m);
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.1rem;
+}
+.dato strong {
+  font-family: var(--fuente-titulo), system-ui, sans-serif;
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+.dato span {
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+}
+@media (min-width: 768px) {
+  .resumen {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Cada inscripción es una tarjeta: se lee bien en 360 px y no hay tablas cortadas. */
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.tarjeta {
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-m);
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+.cabeza {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.nombre {
+  font-family: var(--fuente-titulo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.detalle {
+  color: var(--tinta-suave);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+.acciones {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+@media (min-width: 900px) {
+  .lista {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.formulario {
+  display: grid;
+  gap: 1rem;
+  max-width: 560px;
+}
+.formulario label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  font-weight: 700;
+}
+.formulario input,
+.formulario select {
+  width: 100%;
+  max-width: 100%;
+  min-height: var(--alto-boton);
+  padding: 0.7rem 0.9rem;
+  border: 2px solid var(--linea);
+  border-radius: var(--radio-s);
+  background: var(--papel);
+  font-family: inherit;
+  color: var(--tinta);
+}
+.formulario fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}

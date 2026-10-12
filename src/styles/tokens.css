@@ -1,0 +1,34 @@
+/* Identidad de Flor de Luz. Colores tomados del logo y del flyer del curso. */
+:root {
+  --ciruela: #5a3a69; /* círculo del logo */
+  --ciruela-profundo: #3b2349;
+  --violeta: #7a4bb0; /* pétalos del flyer */
+  --violeta-suave: #eadff5;
+  --dorado: #b08835; /* aro y nombre del logo (decorativo) */
+  --dorado-texto: #7a5a17; /* dorado oscuro, apto para texto sobre crema */
+  --crema: #fbf1e4;
+  --crema-2: #f5e6d1;
+  --papel: #fffdf9;
+  --vino: #8e2a1e; /* etiqueta del flyer */
+  --tinta: #2a1e36;
+  --tinta-suave: #5b4e68;
+  --linea: rgb(90 58 105 / 0.18);
+  --exito: #2f6b4f;
+  --aviso: #8a5a00;
+
+  --radio-s: 10px;
+  --radio-m: 16px;
+  --radio-l: 24px;
+  --sombra-s: 0 1px 2px rgb(42 30 54 / 0.08), 0 2px 8px rgb(42 30 54 / 0.06);
+  --sombra-m: 0 6px 24px rgb(42 30 54 / 0.14);
+
+  --ancho-contenido: 1080px;
+  --gutter: 16px;
+  --alto-boton: 52px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+}

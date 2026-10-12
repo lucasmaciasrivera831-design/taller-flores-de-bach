@@ -1,0 +1,111 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--alto-boton);
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font-family: var(--fuente-titulo), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.boton:active {
+  transform: scale(0.98);
+}
+.boton[disabled],
+.boton[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.primario {
+  background: var(--ciruela);
+  color: var(--crema);
+}
+.primario:hover {
+  background: var(--ciruela-profundo);
+}
+.claro {
+  background: var(--crema);
+  color: var(--ciruela-profundo);
+}
+.claro:hover {
+  background: var(--papel);
+}
+.borde {
+  background: transparent;
+  color: var(--ciruela);
+  border-color: var(--ciruela);
+}
+.borde:hover {
+  background: var(--violeta-suave);
+}
+.bordeClaro {
+  background: transparent;
+  color: var(--crema);
+  border-color: rgb(251 241 228 / 0.7);
+}
+.bordeClaro:hover {
+  background: rgb(251 241 228 / 0.12);
+}
+.completo {
+  width: 100%;
+}
+.chico {
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+}
+
+.tarjeta {
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-l);
+  padding: 1.25rem;
+  box-shadow: var(--sombra-s);
+}
+@media (min-width: 768px) {
+  .tarjeta {
+    padding: 1.75rem;
+  }
+}
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.4;
+  background: var(--violeta-suave);
+  color: var(--ciruela-profundo);
+}
+.etiquetaExito {
+  background: #dcefe4;
+  color: #1f4d38;
+}
+.etiquetaAviso {
+  background: #fbe8c2;
+  color: #6b4500;
+}
+.etiquetaVino {
+  background: #f6d9d4;
+  color: var(--vino);
+}
+
+.aviso {
+  border-radius: var(--radio-m);
+  padding: 0.875rem 1rem;
+  background: #fbe8c2;
+  color: #5c3b00;
+  font-size: 0.95rem;
+}
