@@ -1,17 +1,15 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { BannerVistaPrevia } from "@/components/BannerVistaPrevia";
+import { cerrarSesion } from "@/app/(publico)/login/actions";
 import { Emblema } from "@/components/Logo";
 import { VISTA_PREVIA } from "@/lib/vista-previa";
+import { requerirAdmin } from "@/lib/sesion";
 import estilos from "./admin.module.css";
 
-export default function LayoutAdmin({ children }: { children: React.ReactNode }) {
-  // Hasta que exista el login con roles (tarea T4), el panel solo se muestra en vista previa.
-  if (!VISTA_PREVIA) notFound();
+export default async function LayoutAdmin({ children }: { children: React.ReactNode }) {
+  await requerirAdmin();
 
   return (
     <div className={estilos.marco}>
-      <BannerVistaPrevia texto="panel de Victoria con datos de ejemplo; todavía no hay inicio de sesión." />
       <header className={estilos.encabezado}>
         <div className={`contenedor ${estilos.barra}`}>
           <span className={estilos.marca}>
@@ -20,7 +18,12 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
           </span>
           <nav className={estilos.nav} aria-label="Panel">
             <Link href="/admin">Inscripciones</Link>
-            <Link href="/admin/clases">Clases</Link>
+            {VISTA_PREVIA && <Link href="/admin/clases">Clases</Link>}
+            <form action={cerrarSesion}>
+              <button type="submit" className={estilos.salir}>
+                Salir
+              </button>
+            </form>
           </nav>
         </div>
       </header>

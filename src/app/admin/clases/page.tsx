@@ -1,9 +1,13 @@
+import { notFound } from "next/navigation";
 import { Aviso, Boton, Etiqueta } from "@/components/ui";
 import { CLASES_DEMO } from "@/lib/demo-data";
 import { fechaLarga } from "@/lib/encuentros";
+import { VISTA_PREVIA } from "@/lib/vista-previa";
 import estilos from "../admin.module.css";
 
 export default function PanelClases() {
+  // Maqueta con datos de ejemplo: no existe en producción hasta la tarea T12.
+  if (!VISTA_PREVIA) notFound();
   return (
     <>
       <div>

@@ -1,0 +1,30 @@
+.pagina {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 28rem;
+  padding-block: 2rem 4rem;
+}
+.formulario {
+  display: grid;
+  gap: 0.5rem;
+}
+.formulario label {
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+.formulario input:not([type="hidden"]) {
+  min-height: 48px;
+  font-size: 1rem;
+  padding-inline: 0.9rem;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-m);
+  background: var(--papel);
+  color: inherit;
+}
+.formulario button {
+  margin-top: 1rem;
+}
+.error {
+  color: var(--vino);
+  font-weight: 700;
+}
