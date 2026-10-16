@@ -7,7 +7,7 @@ export default function LayoutPublico({ children }: { children: React.ReactNode 
   return (
     <>
       {VISTA_PREVIA && (
-        <BannerVistaPrevia texto="el diseño es definitivo, pero los textos son de ejemplo y todavía no se guardan inscripciones." />
+        <BannerVistaPrevia texto="el diseño es definitivo, los textos son de ejemplo pero las inscripciones sí se guardan." />
       )}
       <EncabezadoPublico />
       <main>{children}</main>

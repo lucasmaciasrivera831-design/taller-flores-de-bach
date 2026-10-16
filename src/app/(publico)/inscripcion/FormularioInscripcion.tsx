@@ -185,6 +185,12 @@ export function FormularioInscripcion({ planInicial }: { planInicial: PlanId }) 
         )}
       </div>
 
+      {estado.mensaje && (
+        <p className={estilos.error} role="alert">
+          {estado.mensaje}
+        </p>
+      )}
+
       <Boton type="submit" completo disabled={enviando} aria-busy={enviando}>
         {enviando ? "Enviando…" : "Enviar mi inscripción"}
       </Boton>

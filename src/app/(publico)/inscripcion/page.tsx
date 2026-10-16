@@ -30,7 +30,7 @@ export default async function PaginaInscripcion({
       </header>
       {VISTA_PREVIA && (
         <Aviso>
-          Vista previa: por ahora este formulario funciona pero no guarda la inscripción.
+          Vista previa: las inscripciones de prueba se guardan de verdad en la base.
         </Aviso>
       )}
       <FormularioInscripcion planInicial={planInicial} />

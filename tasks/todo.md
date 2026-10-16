@@ -6,12 +6,12 @@
 ## Fase 0 — Preparación (en paralelo, sin código) · dom 11/10 a mié 14/10
 - [ ] **P1** Prueba de grabación con **Fathom** (decidido 12/10): qué link da, si se abre sin cuenta, si deja descargar el MP4 ⚠️ *la más crítica*
 - [ ] **P2** Reunir contenidos. Recibido: logo y flyer, alias, firma (Victoria Salami). **Falta:** WhatsApp, link de Meet, texto y programa reales, PDF cuestionario, gráfico 7 grupos, foto de la flor sin texto, confirmar regla de la seña
-- [~] **P3** Cuentas: repo GitHub ✅ (`taller-flores-de-bach`), hosting = Vercel ✅. **Falta:** proyecto Supabase (registro público desactivado), `vercel login` y dar acceso de la app de GitHub de Vercel al repo
+- [~] **P3** Cuentas: repo GitHub ✅, hosting = Vercel ✅, **proyecto Supabase `flor-de-luz` creado ✅** (ref `oszjytxfzsafhqolsvox`, us-east-1). **Falta:** desactivar registro público (Auth > Sign In / Providers > "Allow new users to sign up" OFF), pegar `SUPABASE_SERVICE_ROLE_KEY` en `.env.local`, `vercel login` y acceso de la app de GitHub de Vercel al repo
 
 ## Fase 1 — Cimientos
 - [x] **T1** Proyecto base + sistema de diseño Flor de Luz (mobile-first). Playwright se instala más adelante
 - [x] **T2** Cálculo de seña y cuotas (29 tests en verde)
-- [ ] **T3** Base de datos + RLS + buckets + pruebas de RLS
+- [x] **T3** Base de datos + RLS + buckets + pruebas de RLS (2026-10-13): migración `supabase/migrations/20261013000000_esquema_inicial.sql` aplicada, 40 comprobaciones de seguridad OK (`supabase/tests/rls.sql`), cuotas generadas por trigger en la base
 - [ ] **T4** Auth y roles (`proxy.ts`, login, admin)
 - [ ] ✅ **Checkpoint A**
 
