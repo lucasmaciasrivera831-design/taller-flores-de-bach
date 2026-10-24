@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Boton, BotonExterno, Etiqueta } from "@/components/ui";
 import { CURSO } from "@/content/curso";
-import { CLASES_DEMO } from "@/lib/demo-data";
-import { ENCUENTROS, diasHasta, fechaLarga, proximoEncuentro } from "@/lib/encuentros";
+import { armarClases, type FilaClase } from "@/lib/clases";
+import { diasHasta, fechaLarga, proximoEncuentro } from "@/lib/encuentros";
+import { requerirMiembro } from "@/lib/sesion";
 import estilos from "./aula.module.css";
 
 // Depende de la hora actual: no se puede generar una sola vez al compilar.
@@ -14,10 +15,17 @@ function textoDias(dias: number): string {
   return `Faltan ${dias} días`;
 }
 
-export default function InicioAula() {
+export default async function InicioAula() {
+  const { supabase } = await requerirMiembro();
+  const [{ data: filas }, { data: ajuste }] = await Promise.all([
+    supabase.from("clases").select("orden,titulo,descripcion,video_url,pdf_path,estado").eq("estado", "publicada"),
+    supabase.from("ajustes").select("valor").eq("clave", "meet_url").maybeSingle(),
+  ]);
+  const clases = armarClases((filas ?? []) as FilaClase[]);
+  const meetUrl = ajuste?.valor?.startsWith("https://") ? ajuste.valor : null;
+
   const ahora = new Date();
   const proximo = proximoEncuentro(ahora);
-  const clase = proximo ? CLASES_DEMO.find((c) => c.orden === proximo.orden) : undefined;
 
   return (
     <>
@@ -33,8 +41,8 @@ export default function InicioAula() {
           <p className={estilos.proximoHora}>
             {proximo.inicio} a {proximo.fin} · {textoDias(diasHasta(proximo.fecha, ahora))}
           </p>
-          {clase?.meetUrl ? (
-            <BotonExterno href={clase.meetUrl} variante="claro">
+          {meetUrl ? (
+            <BotonExterno href={meetUrl} variante="claro">
               Entrar a Meet
             </BotonExterno>
           ) : (
@@ -56,8 +64,8 @@ export default function InicioAula() {
       <section className={estilos.seccion} aria-labelledby="clases">
         <h2 id="clases">Las clases</h2>
         <ol className={estilos.lista}>
-          {ENCUENTROS.map((e) => {
-            const c = CLASES_DEMO.find((x) => x.orden === e.orden)!;
+          {clases.map((c) => {
+            const e = c.encuentro;
             const contenido = (
               <>
                 <span className={estilos.numero}>{e.orden}</span>

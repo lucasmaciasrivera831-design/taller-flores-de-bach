@@ -219,3 +219,33 @@
     grid-template-columns: 1fr 14rem auto;
   }
 }
+
+.casilla {
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600 !important;
+}
+.casilla input {
+  width: 1.4rem;
+  min-height: 1.4rem;
+  flex: none;
+}
+.ok {
+  color: #2f6b3f;
+  font-weight: 700;
+}
+.error {
+  color: #9c2f2f;
+  font-weight: 700;
+}
+.clave {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radio-s);
+  background: var(--papel);
+  border: 2px dashed var(--linea);
+  font: inherit;
+  font-size: 0.95rem;
+}

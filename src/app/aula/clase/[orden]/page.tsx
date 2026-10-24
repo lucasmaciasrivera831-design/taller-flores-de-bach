@@ -3,21 +3,37 @@ import { notFound } from "next/navigation";
 import { Reproductor } from "@/components/Reproductor";
 import { Boton, BotonEnlace, BotonExterno } from "@/components/ui";
 import { PROGRAMA } from "@/content/curso";
-import { CLASES_DEMO } from "@/lib/demo-data";
+import { armarClases, type FilaClase } from "@/lib/clases";
 import { fechaLarga } from "@/lib/encuentros";
+import { requerirMiembro } from "@/lib/sesion";
 import estilos from "../../aula.module.css";
 
 export default async function PaginaClase({ params }: { params: Promise<{ orden: string }> }) {
   const { orden: ordenTexto } = await params;
   const orden = Number(ordenTexto);
-  const clase = CLASES_DEMO.find((c) => c.orden === orden);
+  if (!Number.isInteger(orden) || orden < 1 || orden > PROGRAMA.length) notFound();
+
+  const { supabase } = await requerirMiembro();
+  const { data: filas } = await supabase
+    .from("clases")
+    .select("orden,titulo,descripcion,video_url,pdf_path,estado")
+    .eq("estado", "publicada");
+  const clases = armarClases((filas ?? []) as FilaClase[]);
+  const actual = clases.find((c) => c.encuentro.orden === orden);
 
   // Una clase que no existe o no está publicada se ve igual: no se revela si hay algo detrás.
-  if (!clase || !clase.publicada) notFound();
+  if (!actual || !actual.publicada) notFound();
 
+  const clase = { orden, titulo: actual.titulo, fecha: actual.encuentro.fecha, grabacionUrl: actual.videoUrl };
   const puntos = PROGRAMA[orden - 1].puntos;
-  const anterior = CLASES_DEMO.find((c) => c.orden === orden - 1 && c.publicada);
-  const siguiente = CLASES_DEMO.find((c) => c.orden === orden + 1 && c.publicada);
+  const anterior = clases.find((c) => c.encuentro.orden === orden - 1 && c.publicada)?.encuentro;
+  const siguiente = clases.find((c) => c.encuentro.orden === orden + 1 && c.publicada)?.encuentro;
+
+  let pdfUrl: string | null = null;
+  if (actual.pdfPath) {
+    const { data } = await supabase.storage.from("clases-pdf").createSignedUrl(actual.pdfPath, 3600);
+    pdfUrl = data?.signedUrl ?? null;
+  }
 
   return (
     <>
@@ -36,8 +52,8 @@ export default async function PaginaClase({ params }: { params: Promise<{ orden:
       <Reproductor url={clase.grabacionUrl} titulo={`Encuentro ${clase.orden}: ${clase.titulo}`} />
 
       <div className={estilos.acciones}>
-        {clase.pdfUrl ? (
-          <BotonExterno href={clase.pdfUrl}>Descargar el PDF de la clase</BotonExterno>
+        {pdfUrl ? (
+          <BotonExterno href={pdfUrl}>Descargar el PDF de la clase</BotonExterno>
         ) : (
           <Boton disabled aria-disabled="true">
             El PDF todavía no está disponible

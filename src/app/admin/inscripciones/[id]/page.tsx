@@ -10,6 +10,7 @@ import {
 } from "@/lib/inscripciones";
 import { formatoARS, obtenerPlan } from "@/lib/planes";
 import { requerirAdmin } from "@/lib/sesion";
+import { AccesoAlumna } from "./AccesoAlumna";
 import { cambiarEstado, guardarNotas, marcarCuota } from "../../actions";
 import estilos from "../../admin.module.css";
 
@@ -31,6 +32,11 @@ export default async function DetalleInscripcion({ params }: { params: Promise<{
     .eq("inscripcion_id", id)
     .order("numero");
   const plan = obtenerPlan(i.plan_id);
+  const { data: perfil } = await supabase
+    .from("perfiles")
+    .select("user_id,debe_cambiar_clave")
+    .eq("inscripcion_id", id)
+    .maybeSingle();
 
   return (
     <>
@@ -69,6 +75,18 @@ export default async function DetalleInscripcion({ params }: { params: Promise<{
             </form>
           ))}
         </div>
+      </Tarjeta>
+
+      <Tarjeta>
+        <h2>Acceso al aula</h2>
+        <p className={estilos.detalle}>
+          {perfil
+            ? perfil.debe_cambiar_clave
+              ? "Tiene cuenta, pero todavía no entró a cambiar la contraseña temporal."
+              : "Tiene cuenta y ya eligió su contraseña."
+            : "Todavía no tiene cuenta. Creala cuando haya pagado la seña."}
+        </p>
+        <AccesoAlumna id={i.id} tieneCuenta={Boolean(perfil)} />
       </Tarjeta>
 
       <Tarjeta>

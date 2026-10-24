@@ -12,12 +12,24 @@ export async function iniciarSesion(_anterior: EstadoLogin, formData: FormData):
   if (!email || !clave) return { error: "Completá tu email y tu contraseña.", email };
 
   const supabase = await crearClienteServidor();
-  const { error } = await supabase.auth.signInWithPassword({ email, password: clave });
+  const { data: sesion, error } = await supabase.auth.signInWithPassword({ email, password: clave });
   if (error) return { error: "Email o contraseña incorrectos.", email };
 
-  // Solo rutas internas: evita que el login sirva para redirigir a otro sitio.
-  const destino = /^\/(admin|aula)(\/|$)/.test(siguiente) ? siguiente : "/admin";
-  redirect(destino);
+  const { data: perfil } = await supabase
+    .from("perfiles")
+    .select("rol,debe_cambiar_clave")
+    .eq("user_id", sesion.user.id)
+    .maybeSingle();
+  if (!perfil) {
+    await supabase.auth.signOut();
+    return { error: "Esta cuenta todavía no tiene acceso al aula. Escribile a Victoria.", email };
+  }
+  if (perfil.rol === "alumno" && perfil.debe_cambiar_clave) redirect("/cambiar-clave");
+
+  // Solo rutas internas y acordes al rol: el login no sirve para redirigir a otro sitio.
+  const base = perfil.rol === "admin" ? "/admin" : "/aula";
+  const permitido = perfil.rol === "admin" ? /^\/(admin|aula)(\/|$)/ : /^\/aula(\/|$)/;
+  redirect(permitido.test(siguiente) ? siguiente : base);
 }
 
 export async function cerrarSesion() {

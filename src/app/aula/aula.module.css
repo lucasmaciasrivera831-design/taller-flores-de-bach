@@ -241,3 +241,15 @@ a.fila:hover {
     justify-content: space-between;
   }
 }
+
+.salir {
+  min-height: 44px;
+  padding: 0 0.5rem;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}

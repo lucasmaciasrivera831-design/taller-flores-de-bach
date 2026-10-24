@@ -1,25 +1,30 @@
-import { notFound } from "next/navigation";
-import { BannerVistaPrevia } from "@/components/BannerVistaPrevia";
+import { cerrarSesion } from "@/app/(publico)/login/actions";
 import { Emblema } from "@/components/Logo";
-import { ALUMNA_DEMO } from "@/lib/demo-data";
-import { VISTA_PREVIA } from "@/lib/vista-previa";
+import { requerirMiembro } from "@/lib/sesion";
 import { NavAula } from "./NavAula";
 import estilos from "./aula.module.css";
 
-export default function LayoutAula({ children }: { children: React.ReactNode }) {
-  // Hasta que exista el login (tarea T4), el aula solo se muestra en vista previa.
-  if (!VISTA_PREVIA) notFound();
+export const metadata = { robots: { index: false } };
+
+export default async function LayoutAula({ children }: { children: React.ReactNode }) {
+  const { nombre } = await requerirMiembro();
 
   return (
     <div className={estilos.marco}>
-      <BannerVistaPrevia texto="aula con datos de ejemplo; todavía no hay inicio de sesión." />
       <header className={estilos.encabezado}>
         <div className={`contenedor ${estilos.barra}`}>
           <span className={estilos.marca}>
             <Emblema tamano={36} />
             <span>Flor de Luz</span>
           </span>
-          <span className={estilos.usuaria}>Hola, {ALUMNA_DEMO.nombre}</span>
+          <span className={estilos.usuaria}>
+            Hola, {nombre}
+            <form action={cerrarSesion} style={{ display: "inline", marginLeft: "0.75rem" }}>
+              <button type="submit" className={estilos.salir}>
+                Salir
+              </button>
+            </form>
+          </span>
         </div>
       </header>
       <div className={`contenedor ${estilos.cuerpo}`}>

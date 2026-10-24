@@ -13,22 +13,22 @@
 - [x] **T2** Cálculo de seña y cuotas (29 tests en verde)
 - [x] **T3** Base de datos + RLS + buckets + pruebas de RLS (2026-10-13): migración `supabase/migrations/20261013000000_esquema_inicial.sql` aplicada, 40 comprobaciones de seguridad OK (`supabase/tests/rls.sql`), cuotas generadas por trigger en la base
 - [ ] **PENDIENTE TEXTOS (Lucas, más tarde):** Victoria debe revisar/reemplazar lo escrito por Claude en `src/content/curso.ts`: programa de los 5 encuentros, qué incluye, bajada, preguntas frecuentes; más un párrafo de presentación suyo (sección "sobre mí" de la landing, hoy placeholder), foto, y política de cancelación/términos si tiene. Confirmar con prueba real que el botón de WhatsApp (5493425250399) abre el chat.
-- [ ] **T4** Auth y roles (`proxy.ts`, login, admin)
+- [x] **T4** Auth y roles (`proxy.ts`, login por rol, admin, cambio de clave obligatorio en el primer ingreso)
 - [ ] ✅ **Checkpoint A**
 
 ## Fase 2 — Inscripción · **M1: vie 16/10**
 - [~] **T5** Landing pública: hecha con textos de ejemplo; falta Lighthouse y los textos reales
 - [x] **T6** Formulario de inscripción: guarda en Supabase (2026-10-16), duplicados por email y campo trampa; en producción. **Falta** límite por IP (opcional)
 - [~] **T7** Confirmación y datos de pago: hecha; falta cargar el WhatsApp de Victoria
-- [~] **T8** Admin: inscripciones: maqueta con datos de ejemplo; falta conectarla a la base
+- [x] **T8** Admin: inscripciones conectado a la base (lista, detalle, estados, cuotas, notas, CSV)
 - [ ] ✅ **Checkpoint M1** (probado en iPhone y Android; Victoria aprueba textos)
 
 ## Fase 3 — Aula · **M2: jue 22/10**
-- [ ] **T9** Habilitar alumnos (contraseña temporal)
-- [~] **T10** Aula: inicio (próximo encuentro + Meet): maqueta funcionando con datos de ejemplo
-- [~] **T11** Página de clase: maqueta lista; el reproductor ya distingue YouTube de otros links (Fathom)
-- [~] **T12** Admin: gestión de clases: maqueta sin funciones
-- [~] **T13** Biblioteca: maqueta con las 4 secciones (incluye el espacio para el gráfico)
+- [~] **T9** Habilitar alumnos (2026-10-24): botón "Crear acceso al aula" en el detalle de cada inscripción (contraseña temporal + mensaje de WhatsApp). **Necesita `SUPABASE_SERVICE_ROLE_KEY` en Vercel**
+- [x] **T10** Aula: inicio conectado (clases publicadas + link de Meet desde `ajustes`)
+- [x] **T11** Página de clase conectada: grabación (YouTube embebido / Fathom por botón) + PDF con URL firmada
+- [x] **T12** Admin: `/admin/clases` (título, link de grabación, PDF directo a Storage, publicar) y link de Meet
+- [x] **T13** Biblioteca conectada + `/admin/biblioteca` para subir cuestionario, gráfico y archivos
 - [ ] ✅ **Checkpoint M2** (ensayo general con Victoria)
 
 ## Sáb 24/10 — Primer encuentro 🎓
@@ -45,3 +45,9 @@
 ## Fase 6 — Entrega · antes del 12/12
 - [ ] **T18** Pulido, accesibilidad, dispositivos reales
 - [ ] **T19** Seguridad final, respaldo, README, contexto del workspace
+
+## Cómo cargar contenido (a partir del 2026-10-24)
+- **Cada clase:** `/admin/clases` → pegar el link de Fathom/YouTube, subir el PDF, tildar "Publicada" y guardar. Ver el aula como alumna: link "Aula" del panel.
+- **Material extra:** `/admin/biblioteca`.
+- **Alumnas:** inscripción → "Crear acceso al aula" → copiar el mensaje por WhatsApp (la clave temporal se muestra una sola vez).
+- Migración 2 (`20261024000000_aula_ajustes_y_miembros.sql`): tabla `ajustes` (Meet) y lectura de contenido solo para quien tiene perfil.

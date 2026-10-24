@@ -1,64 +1,54 @@
-import { notFound } from "next/navigation";
-import { Aviso, Boton, Etiqueta } from "@/components/ui";
-import { CLASES_DEMO } from "@/lib/demo-data";
+import { Etiqueta, Tarjeta } from "@/components/ui";
+import { armarClases, type FilaClase } from "@/lib/clases";
 import { fechaLarga } from "@/lib/encuentros";
-import { VISTA_PREVIA } from "@/lib/vista-previa";
+import { requerirAdmin } from "@/lib/sesion";
 import estilos from "../admin.module.css";
+import { FormularioClase } from "./FormularioClase";
+import { FormularioMeet } from "./FormularioMeet";
 
-export default function PanelClases() {
-  // Maqueta con datos de ejemplo: no existe en producción hasta la tarea T12.
-  if (!VISTA_PREVIA) notFound();
+export const metadata = { title: "Panel · Clases", robots: { index: false } };
+export const dynamic = "force-dynamic";
+
+export default async function PanelClases() {
+  const { supabase } = await requerirAdmin();
+  const [{ data: filas }, { data: ajuste }] = await Promise.all([
+    supabase.from("clases").select("orden,titulo,descripcion,video_url,pdf_path,estado"),
+    supabase.from("ajustes").select("valor").eq("clave", "meet_url").maybeSingle(),
+  ]);
+  const clases = armarClases((filas ?? []) as FilaClase[]);
+
   return (
     <>
       <div>
         <h1 className={estilos.titulo}>Clases</h1>
         <p className={estilos.subtitulo}>
-          Pegá el link de la grabación, subí el PDF y publicá la clase cuando esté lista.
+          Pegá el link de la grabación, subí el PDF y marcá “Publicada” cuando esté lista.
         </p>
       </div>
 
-      <Aviso>Vista previa: acá se va a poder cargar cada clase. Por ahora los botones no hacen nada.</Aviso>
+      <Tarjeta>
+        <h2>Link de Meet</h2>
+        <FormularioMeet actual={ajuste?.valor ?? ""} />
+      </Tarjeta>
 
-      <ul className={estilos.lista}>
-        {CLASES_DEMO.map((c) => (
-          <li key={c.orden} className={estilos.tarjeta}>
-            <div className={estilos.cabeza}>
-              <div>
-                <p className={estilos.nombre}>
-                  Encuentro {c.orden}: {c.titulo}
-                </p>
-                <p className={estilos.detalle}>{fechaLarga(c.fecha)}</p>
-              </div>
-              <Etiqueta tono={c.publicada ? "exito" : "neutro"}>{c.publicada ? "Publicada" : "Borrador"}</Etiqueta>
+      {clases.map((c) => (
+        <Tarjeta key={c.encuentro.orden}>
+          <div className={estilos.cabeza}>
+            <div>
+              <h2>Encuentro {c.encuentro.orden}</h2>
+              <p className={estilos.detalle}>{fechaLarga(c.encuentro.fecha)}</p>
             </div>
-            <div className={estilos.acciones}>
-              <Boton chico variante="borde" disabled>
-                Editar
-              </Boton>
-              <Boton chico disabled>
-                {c.publicada ? "Pasar a borrador" : "Publicar"}
-              </Boton>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <form className={estilos.formulario} aria-label="Ejemplo del formulario de una clase">
-        <fieldset disabled>
-          <label>
-            Link de la grabación (Fathom o YouTube)
-            <input type="url" placeholder="https://" />
-          </label>
-          <label>
-            Link de Meet del encuentro
-            <input type="url" placeholder="https://meet.google.com/…" />
-          </label>
-          <label>
-            PDF de la clase
-            <input type="file" accept="application/pdf" />
-          </label>
-        </fieldset>
-      </form>
+            <Etiqueta tono={c.publicada ? "exito" : "neutro"}>{c.publicada ? "Publicada" : "Borrador"}</Etiqueta>
+          </div>
+          <FormularioClase
+            orden={c.encuentro.orden}
+            titulo={c.titulo}
+            videoUrl={c.videoUrl ?? ""}
+            tienePdf={Boolean(c.pdfPath)}
+            publicada={c.publicada}
+          />
+        </Tarjeta>
+      ))}
     </>
   );
 }
