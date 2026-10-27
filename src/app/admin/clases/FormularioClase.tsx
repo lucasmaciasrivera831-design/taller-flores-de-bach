@@ -13,11 +13,12 @@ type Props = {
   orden: number;
   titulo: string;
   videoUrl: string;
+  videoUrl2: string;
   tienePdf: boolean;
   publicada: boolean;
 };
 
-export function FormularioClase({ orden, titulo, videoUrl, tienePdf, publicada }: Props) {
+export function FormularioClase({ orden, titulo, videoUrl, videoUrl2, tienePdf, publicada }: Props) {
   const [resultado, setResultado] = useState<Resultado | null>(null);
   const [pendiente, empezar] = useTransition();
   const [subiendo, setSubiendo] = useState(false);
@@ -48,6 +49,7 @@ export function FormularioClase({ orden, titulo, videoUrl, tienePdf, publicada }
         orden,
         titulo: String(datos.get("titulo") ?? ""),
         videoUrl: String(datos.get("videoUrl") ?? ""),
+        videoUrl2: String(datos.get("videoUrl2") ?? ""),
         pdfPath,
         publicada: datos.get("publicada") === "on",
       });
@@ -70,6 +72,10 @@ export function FormularioClase({ orden, titulo, videoUrl, tienePdf, publicada }
       <label>
         Link de la grabación (Fathom o YouTube)
         <input name="videoUrl" type="url" inputMode="url" placeholder="https://" defaultValue={videoUrl} />
+      </label>
+      <label>
+        Link de la grabación, parte 2 (solo si la clase se grabó en dos partes)
+        <input name="videoUrl2" type="url" inputMode="url" placeholder="https://" defaultValue={videoUrl2} />
       </label>
       <label>
         PDF de la clase {tienePdf && "(ya hay uno cargado: si subís otro, lo reemplaza)"}

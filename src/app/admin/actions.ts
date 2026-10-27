@@ -46,6 +46,8 @@ export type DatosClase = {
   orden: number;
   titulo: string;
   videoUrl: string;
+  /** Segunda parte de la grabación (opcional). */
+  videoUrl2?: string;
   /** Ruta ya subida a Storage; `undefined` = no tocar el PDF actual; `null` = quitarlo. */
   pdfPath: string | null | undefined;
   publicada: boolean;
@@ -64,6 +66,13 @@ export async function guardarClase(d: DatosClase): Promise<Resultado> {
   if (video && interpretarGrabacion(video).tipo === "vacia") {
     return { ok: false, mensaje: "El link de la grabación tiene que empezar con https://" };
   }
+  const video2 = (d.videoUrl2 ?? "").trim();
+  if (video2 && interpretarGrabacion(video2).tipo === "vacia") {
+    return { ok: false, mensaje: "El link de la parte 2 tiene que empezar con https://" };
+  }
+  if (video2 && !video) {
+    return { ok: false, mensaje: "Cargá primero el link de la parte 1." };
+  }
   if (d.publicada && !video) {
     return { ok: false, mensaje: "Para publicar la clase falta el link de la grabación." };
   }
@@ -77,6 +86,7 @@ export async function guardarClase(d: DatosClase): Promise<Resultado> {
     orden: d.orden,
     titulo,
     video_url: video || null,
+    video_url_2: video2 || null,
     estado: d.publicada ? "publicada" : "borrador",
   };
   if (d.pdfPath !== undefined) fila.pdf_path = d.pdfPath;

@@ -18,7 +18,7 @@ function textoDias(dias: number): string {
 export default async function InicioAula() {
   const { supabase } = await requerirMiembro();
   const [{ data: filas }, { data: ajuste }] = await Promise.all([
-    supabase.from("clases").select("orden,titulo,descripcion,video_url,pdf_path,estado").eq("estado", "publicada"),
+    supabase.from("clases").select("orden,titulo,descripcion,video_url,video_url_2,pdf_path,estado").eq("estado", "publicada"),
     supabase.from("ajustes").select("valor").eq("clave", "meet_url").maybeSingle(),
   ]);
   const clases = armarClases((filas ?? []) as FilaClase[]);

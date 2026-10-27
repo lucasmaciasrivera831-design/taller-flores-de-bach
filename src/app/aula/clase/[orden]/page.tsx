@@ -16,7 +16,7 @@ export default async function PaginaClase({ params }: { params: Promise<{ orden:
   const { supabase } = await requerirMiembro();
   const { data: filas } = await supabase
     .from("clases")
-    .select("orden,titulo,descripcion,video_url,pdf_path,estado")
+    .select("orden,titulo,descripcion,video_url,video_url_2,pdf_path,estado")
     .eq("estado", "publicada");
   const clases = armarClases((filas ?? []) as FilaClase[]);
   const actual = clases.find((c) => c.encuentro.orden === orden);
@@ -24,7 +24,7 @@ export default async function PaginaClase({ params }: { params: Promise<{ orden:
   // Una clase que no existe o no está publicada se ve igual: no se revela si hay algo detrás.
   if (!actual || !actual.publicada) notFound();
 
-  const clase = { orden, titulo: actual.titulo, fecha: actual.encuentro.fecha, grabacionUrl: actual.videoUrl };
+  const clase = { orden, titulo: actual.titulo, fecha: actual.encuentro.fecha, grabacionUrl: actual.videoUrl, grabacionUrl2: actual.videoUrl2 };
   const puntos = PROGRAMA[orden - 1].puntos;
   const anterior = clases.find((c) => c.encuentro.orden === orden - 1 && c.publicada)?.encuentro;
   const siguiente = clases.find((c) => c.encuentro.orden === orden + 1 && c.publicada)?.encuentro;
@@ -49,7 +49,16 @@ export default async function PaginaClase({ params }: { params: Promise<{ orden:
         </p>
       </div>
 
-      <Reproductor url={clase.grabacionUrl} titulo={`Encuentro ${clase.orden}: ${clase.titulo}`} />
+      {clase.grabacionUrl2 ? (
+        <>
+          <h2 className={estilos.subtituloParte}>Parte 1</h2>
+          <Reproductor url={clase.grabacionUrl} titulo={`Encuentro ${clase.orden}: ${clase.titulo} (parte 1)`} />
+          <h2 className={estilos.subtituloParte}>Parte 2</h2>
+          <Reproductor url={clase.grabacionUrl2} titulo={`Encuentro ${clase.orden}: ${clase.titulo} (parte 2)`} />
+        </>
+      ) : (
+        <Reproductor url={clase.grabacionUrl} titulo={`Encuentro ${clase.orden}: ${clase.titulo}`} />
+      )}
 
       <div className={estilos.acciones}>
         {pdfUrl ? (

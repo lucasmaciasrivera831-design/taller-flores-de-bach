@@ -253,3 +253,8 @@ a.fila:hover {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.subtituloParte {
+  margin: 0.5rem 0 0;
+  font-size: 1.15rem;
+}

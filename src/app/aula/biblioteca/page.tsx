@@ -14,7 +14,7 @@ type Item = { clave: string; titulo: string; detalle?: string; url: string | nul
 export default async function Biblioteca() {
   const { supabase } = await requerirMiembro();
   const [{ data: filas }, { data: material }] = await Promise.all([
-    supabase.from("clases").select("orden,titulo,descripcion,video_url,pdf_path,estado").eq("estado", "publicada"),
+    supabase.from("clases").select("orden,titulo,descripcion,video_url,video_url_2,pdf_path,estado").eq("estado", "publicada"),
     supabase.from("material").select("id,categoria,titulo,archivo_path").order("orden").order("created_at"),
   ]);
 

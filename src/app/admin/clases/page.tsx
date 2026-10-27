@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export default async function PanelClases() {
   const { supabase } = await requerirAdmin();
   const [{ data: filas }, { data: ajuste }] = await Promise.all([
-    supabase.from("clases").select("orden,titulo,descripcion,video_url,pdf_path,estado"),
+    supabase.from("clases").select("orden,titulo,descripcion,video_url,video_url_2,pdf_path,estado"),
     supabase.from("ajustes").select("valor").eq("clave", "meet_url").maybeSingle(),
   ]);
   const clases = armarClases((filas ?? []) as FilaClase[]);
@@ -44,6 +44,7 @@ export default async function PanelClases() {
             orden={c.encuentro.orden}
             titulo={c.titulo}
             videoUrl={c.videoUrl ?? ""}
+            videoUrl2={c.videoUrl2 ?? ""}
             tienePdf={Boolean(c.pdfPath)}
             publicada={c.publicada}
           />

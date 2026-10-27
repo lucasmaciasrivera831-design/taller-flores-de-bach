@@ -6,6 +6,7 @@ export type FilaClase = {
   titulo: string;
   descripcion: string | null;
   video_url: string | null;
+  video_url_2?: string | null;
   pdf_path: string | null;
   estado: "borrador" | "publicada";
 };
@@ -15,6 +16,8 @@ export type ClaseDelAula = {
   titulo: string;
   publicada: boolean;
   videoUrl: string | null;
+  /** Segunda parte de la grabación, si la clase se grabó en dos partes. */
+  videoUrl2: string | null;
   pdfPath: string | null;
 };
 
@@ -27,6 +30,7 @@ export function armarClases(filas: readonly FilaClase[]): ClaseDelAula[] {
       titulo: fila?.titulo || PROGRAMA[encuentro.orden - 1].titulo,
       publicada: fila?.estado === "publicada",
       videoUrl: fila?.video_url ?? null,
+      videoUrl2: fila?.video_url_2 ?? null,
       pdfPath: fila?.pdf_path ?? null,
     };
   });
